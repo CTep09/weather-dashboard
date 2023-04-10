@@ -2,6 +2,25 @@ var searchBtn = document.getElementById('searchBtn');
 var weatherInfoEl = document.getElementById('weatherInfo');
 var forecastInfoEl = document.getElementById('forecast');
 
+// For search history
+var searchHistory  = localStorage.getItem('searchHistory');
+
+// Check if history exists in local storage
+if (searchHistory) {
+    var searchInputs = searchHistory.split(',');
+
+    for (var i = 0; i < searchInputs.length; i++) {
+        var searchInput = searchInputs[i];
+
+        var searchHistoryEl = document.createElement('p');
+        searchHistoryEl.textContent = "Search history: " + searchInput;
+
+        document.body.appendChild(searchHistoryEl);
+    }
+}
+
+
+
 // Add an event listener to the search button
 searchBtn.addEventListener('click', function () {
     // Get the input value for city and state
@@ -70,13 +89,13 @@ searchBtn.addEventListener('click', function () {
                             var forecastCard = `
                             <h1>Day ${i + 1}: ${fiveDaysForecastData[i].dt_txt.split(" ")[0]}</h1>
                             <h2>Weather: ${fiveDaysForecastData[i].weather[0].main}
-                                <img src='https://openweathermap.org/img/w/${fiveDaysForecastData[i].weather[0].icon}.png'></img>
                             </h2>
                             <p>
-                                Temperature: ${((fiveDaysForecastData[i].main.temp - 273.15) * 9 / 5 + 32).toFixed(2)}
-                                Humidity: ${fiveDaysForecastData[i].main.humidity}
-                                Wind Speed: ${fiveDaysForecastData[i].wind.speed}
+                            Temperature: ${((fiveDaysForecastData[i].main.temp - 273.15) * 9 / 5 + 32).toFixed(2)}
+                            Humidity: ${fiveDaysForecastData[i].main.humidity}
+                            Wind Speed: ${fiveDaysForecastData[i].wind.speed}
                             </p>
+                            <img src='https://openweathermap.org/img/w/${fiveDaysForecastData[i].weather[0].icon}.png'></img>
                         `
                             // Appending cards to html page
                             forecastInfoEl.innerHTML += forecastCard;
@@ -91,4 +110,16 @@ searchBtn.addEventListener('click', function () {
         .catch(error => {
             console.error(error);
         });
+        
+        // Setting up local storage
+        localStorage.setItem('searchInput', cityStateInput);
+
+        var currentSearchHistory = localStorage.getItem('searchHistory');
+        if(currentSearchHistory) {
+            currentSearchHistory += ',' + cityStateInput;
+            localStorage.setItem('searchHistory',currentSearchHistory);
+        } else {
+            localStorage.setItem('searchHistory', cityStateInput);
+        }
+        
 });
