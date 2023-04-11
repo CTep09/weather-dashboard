@@ -14,8 +14,12 @@ if (searchHistory) {
     for (var i = 0; i < searchInputs.length; i++) {
         var searchInput = searchInputs[i];
 
-        var searchHistoryEl = document.createElement('p');
-        searchHistoryEl.textContent = "Search history: " + searchInput;
+        var searchHistoryEl = document.createElement('button');
+        searchHistoryEl.textContent = "Search History: "+ searchInput;
+        searchHistoryEl.addEventListener('click', function(event) {
+            var cityStateInput = event.target.textContent.replace("Search history: ", "");
+            searchWeather(cityStateInput);
+        })
 
         document.body.appendChild(searchHistoryEl);
     }
@@ -89,8 +93,7 @@ searchBtn.addEventListener('click', function () {
                         for (var i = 0; i < fiveDaysForecastData.length; i++) {
                             var forecastCard = `
                             <h1>Day ${i + 1}: ${fiveDaysForecastData[i].dt_txt.split(" ")[0]}</h1>
-                            <h2>Weather: ${fiveDaysForecastData[i].weather[0].main}
-                            </h2>
+                            <h2>Weather: ${fiveDaysForecastData[i].weather[0].main}</h2>
                             <p>
                             Temperature: ${((fiveDaysForecastData[i].main.temp - 273.15) * 9 / 5 + 32).toFixed(2)}
                             Humidity: ${fiveDaysForecastData[i].main.humidity}
