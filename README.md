@@ -11,7 +11,7 @@ The Weather Dashboard is simple and easy to use. The User enters the desired cit
 The Weather Dashboard uses Open Weather API to get the current weather condtions including, temperature, humidity and wind. The search history shows the user which cities they have previously searched for. 
 
 
-![Weather Dashboard Gif]()
+![Weather Dashboard Gif](./assets/images/weather-dashboard.gif)
 
 ## Built With
 
