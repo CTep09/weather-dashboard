@@ -1,9 +1,11 @@
+// Variables to reference DOM Elements
 var searchBtn = document.getElementById('searchBtn');
+var clearHistoryBtn = document.getElementById('clearHistoryBtn')
 var weatherInfoEl = document.getElementById('weatherInfo');
 var forecastInfoEl = document.getElementById('forecast');
 
 // For search history
-var searchHistory  = localStorage.getItem('searchHistory');
+var searchHistory = localStorage.getItem('searchHistory');
 
 // Check if history exists in local storage
 if (searchHistory) {
@@ -18,7 +20,6 @@ if (searchHistory) {
         document.body.appendChild(searchHistoryEl);
     }
 }
-
 
 
 // Add an event listener to the search button
@@ -38,7 +39,7 @@ searchBtn.addEventListener('click', function () {
     // Save the input value to local storage
     localStorage.setItem('searchInput', cityStateInput);
 
-    // Call the API with the constructed URL
+    // Call the API with the URL
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
@@ -70,11 +71,11 @@ searchBtn.addEventListener('click', function () {
 
                 // 5 day forecast 
                 var forecastApiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`;
-                    
+
                 fetch(forecastApiUrl)
                     .then(response => response.json())
                     .then(forecastData => {
-                        
+
                         // Creating array for forecast data to pull for each day 
                         var fiveDaysForecastData = [
                             forecastData.list[3],
@@ -83,8 +84,8 @@ searchBtn.addEventListener('click', function () {
                             forecastData.list[27],
                             forecastData.list[35]
                         ]
-                        
-                        // Created for loop to iteerate over 5 day forecast and dynamically generate cards 
+
+                        // Created for loop to iterate over 5 day forecast and dynamically generate cards 
                         for (var i = 0; i < fiveDaysForecastData.length; i++) {
                             var forecastCard = `
                             <h1>Day ${i + 1}: ${fiveDaysForecastData[i].dt_txt.split(" ")[0]}</h1>
@@ -110,16 +111,26 @@ searchBtn.addEventListener('click', function () {
         .catch(error => {
             console.error(error);
         });
-        
-        // Setting up local storage
-        localStorage.setItem('searchInput', cityStateInput);
 
-        var currentSearchHistory = localStorage.getItem('searchHistory');
-        if(currentSearchHistory) {
-            currentSearchHistory += ',' + cityStateInput;
-            localStorage.setItem('searchHistory',currentSearchHistory);
-        } else {
-            localStorage.setItem('searchHistory', cityStateInput);
-        }
-        
+    // Setting up local storage
+    localStorage.setItem('searchInput', cityStateInput);
+
+    var currentSearchHistory = localStorage.getItem('searchHistory');
+    if (currentSearchHistory) {
+        currentSearchHistory += ',' + cityStateInput;
+        localStorage.setItem('searchHistory', currentSearchHistory);
+    } else {
+        localStorage.setItem('searchHistory', cityStateInput);
+    }
+
+})
+// Clearing history when user clicks the clear history button
+clearHistoryBtn.addEventListener('click', function () {
+    localStorage.removeItem('searchHistory');
+
+    var searchHistoryEls = document.querySelectorAll('p');
+    searchHistoryEls.forEach(function (searchHistoryEl) {
+        searchHistoryEl.remove();
+})
+    
 });

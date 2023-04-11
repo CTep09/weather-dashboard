@@ -11,14 +11,29 @@
 </head>
 
 <body>
-    <h1>Weather Dashboard</h1>
+
+    <section class="hero">
+        <div class="hero-body">
+          <p class="title">
+            Weather Dashboard
+          </p>
+        </div>
+      </section>
+
+    <!-- Search bar with City, State text before user enters info -->
     <input type="text" id="citySearch" placeholder="City, State">
+    
+    <!-- Search button -->
     <button id="searchBtn">Search</button>
 
+    <!-- Weather and 5 day Forecast holders  -->
     <div id="weatherInfo"></div>
+    
     <div id="forecast"></div>
 
+    <!-- Search History and button for user  -->
     <div id="searchHistory"></div>
+    <button id="clearHistoryBtn">Clear History</button>
 
 </body>
 <script src="./js/script.js"></script>
