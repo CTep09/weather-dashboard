@@ -7,12 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Dashboard</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
 <body>
 
-    <section class="hero">
+    <section class="hero is-primary">
         <div class="hero-body">
           <h1 class="title">
             Weather Dashboard
@@ -21,10 +21,10 @@
       </section>
 
     <!-- Search bar with City, State text before user enters info -->
-    <input type="text" id="citySearch" placeholder="City, State">
+    <input class="input is-primary" type="text" id="citySearch" placeholder="City, State">
     
     <!-- Search button -->
-    <button id="searchBtn">Search</button>
+    <button class="button is-primary is-light is-outlined" id="searchBtn">Search</button>
 
     <!-- Weather and 5 day Forecast holders  -->
     <div id="weatherInfo"></div>
@@ -33,9 +33,9 @@
 
     <!-- Search History and button for user  -->
     <div id="searchHistory"></div>
-    <button id="clearHistoryBtn">Clear History</button>
+    <button class="button is-warning is-light is-outlined" id="clearHistoryBtn">Clear History</button>
 
 </body>
-<script src="./js/script.js"></script>
+<script src="./assets/js/script.js"></script>
 
 </html>

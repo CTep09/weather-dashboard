@@ -4,24 +4,29 @@ var clearHistoryBtn = document.getElementById('clearHistoryBtn')
 var weatherInfoEl = document.getElementById('weatherInfo');
 var forecastInfoEl = document.getElementById('forecast');
 
+var cities = [];
+
 // For search history
 var searchHistory = localStorage.getItem('searchHistory');
 
 // Check if history exists in local storage
 if (searchHistory) {
-    var searchInputs = searchHistory.split(',');
+    // var searchInputs = searchHistory.split(',');
+    var parsedHistory = JSON.parse(searchHistory);
+   cities = cities.concat(parsedHistory);
 
-    for (var i = 0; i < searchInputs.length; i++) {
-        var searchInput = searchInputs[i];
+
+    for (var i = 0; i < cities.length; i++) {
+        var searchInput = cities[i];
 
         var searchHistoryEl = document.createElement('button');
-        searchHistoryEl.textContent = "Search History: "+ searchInput;
-        searchHistoryEl.addEventListener('click', function(event) {
-            var cityStateInput = event.target.textContent.replace("Search history: ", "");
+        searchHistoryEl.textContent = "Search History: " + searchInput;
+        searchHistoryEl.addEventListener('click', function (event) {
             searchWeather(cityStateInput);
         })
 
         document.body.appendChild(searchHistoryEl);
+        console.log(searchHistoryEl)
     }
 }
 
@@ -118,13 +123,10 @@ searchBtn.addEventListener('click', function () {
     // Setting up local storage
     localStorage.setItem('searchInput', cityStateInput);
 
-    var currentSearchHistory = localStorage.getItem('searchHistory');
-    if (currentSearchHistory) {
-        currentSearchHistory += ',' + cityStateInput;
-        localStorage.setItem('searchHistory', currentSearchHistory);
-    } else {
-        localStorage.setItem('searchHistory', cityStateInput);
-    }
+    // let currentSearchHistory = localStorage.getItem('searchHistory');
+    cities.push(cityStateInput);
+    localStorage.setItem('searchHistory', JSON.stringify(cities));
+    
 
 })
 // Clearing history when user clicks the clear history button
@@ -134,6 +136,6 @@ clearHistoryBtn.addEventListener('click', function () {
     var searchHistoryEls = document.querySelectorAll('p');
     searchHistoryEls.forEach(function (searchHistoryEl) {
         searchHistoryEl.remove();
-})
-    
+    })
+
 });
